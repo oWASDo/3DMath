@@ -1,5 +1,6 @@
 #pragma once
 #include <math.h> 
+#include "MathUtils.h"
 
 class Vector2D
 {

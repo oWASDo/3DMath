@@ -5,7 +5,7 @@ public:
 	MathUtils();
 	~MathUtils();
 
-	float Clamp(float value, float min, float max);
+	static float Clamp(float value, float min, float max);
 
 private:
 

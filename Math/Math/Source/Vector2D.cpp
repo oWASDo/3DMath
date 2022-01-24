@@ -169,14 +169,16 @@ float Vector2D::Angle(Vector2D a, Vector2D b) {
 #pragma region Lerp
 Vector2D Vector2D::Lerp(Vector2D other, float t)
 {
-	if (t < 0.0f)
-	{
-		t = 0.0f;
-	}
-	else if (t > 1.0f) {
+	//if (t < 0.0f)
+	//{
+	//	t = 0.0f;
+	//}
+	//else if (t > 1.0f) {
 
-		t = 1.0f;
-	}
+	//	t = 1.0f;
+	//}
+	t = MathUtils::Clamp(t, 0.0f, 1.0f);
+
 	Vector2D dir = other - *this;
 
 	return *this + (dir * t);

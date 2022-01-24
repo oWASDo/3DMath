@@ -1,5 +1,6 @@
 #pragma once
 #include <math.h> 
+#include "MathUtils.h"
 
 class Vector3D
 {
@@ -74,6 +75,17 @@ public:
 
 #pragma endregion
 
+#pragma region Lerp
+	Vector3D Lerp(Vector3D clamp, float t);
+	static Vector3D Lerp(Vector3D a, Vector3D b, float t);
+
+#pragma endregion
+
+#pragma region Reflect
+	Vector3D ReflectVector(Vector3D normalVector);
+	static Vector3D ReflectVector(Vector3D a, Vector3D normalVector);
+
+#pragma endregion
 
 #pragma region GetSet
 	float GetX();

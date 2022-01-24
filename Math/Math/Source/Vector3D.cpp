@@ -204,6 +204,24 @@ float Vector3D::Angle(Vector3D other) {
 float Vector3D::Angle(Vector3D a, Vector3D b) {
 	return a.Angle(b);
 }
+Vector3D Vector3D::Lerp(Vector3D clamp, float t)
+{
+	t = MathUtils::Clamp(t, 0.0f, 1.0f);
+	return Vector3D();
+}
+Vector3D Vector3D::Lerp(Vector3D a, Vector3D b, float t)
+{
+	return a.Lerp(b, t);
+}
+Vector3D Vector3D::ReflectVector(Vector3D normalVector)
+{
+	auto s = 2.0f * Dot(*this, normalVector);
+	return *this - (normalVector * s);
+}
+Vector3D Vector3D::ReflectVector(Vector3D a, Vector3D normalVector)
+{
+	return a.ReflectVector(normalVector);
+}
 #pragma endregion
 
 #pragma region GetSet
