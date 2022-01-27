@@ -128,7 +128,7 @@ int main()
 	{
 		Vector2D v = Vector2D(7.1f, 1.25f);
 		Vector2D v1 = Vector2D(5.02f, 5.42f);
-		float angle = v.Angle(v1);
+		float angle = v.AngleDeg(v1);
 		UnitTest::Assert((angle - 0.7964f) < 0.001f);
 	}
 
@@ -136,13 +136,13 @@ int main()
 	{
 		Vector2D v = Vector2D(-7.1f, 1.25f);
 		Vector2D v1 = Vector2D(-5.02f, -5.42f);
-		float angle = v.Angle(v1);
+		float angle = v.AngleDeg(v1);
 		UnitTest::Assert((angle - 0.54201f) < 0.001f);
 	}
 	{
 		Vector2D v = Vector2D(-7.1f, 1.25f);
 		Vector2D v1 = Vector2D(-5.02f, -5.42f);
-		float angle = Vector2D::Angle(v, v1);
+		float angle = Vector2D::AngleDeg(v, v1);
 		UnitTest::Assert((angle - 0.54201f) < 0.001f);
 	}
 
@@ -173,16 +173,44 @@ int main()
 
 	{
 		Vector2D v = Vector2D(0.7f, 3.6f);
-		Vector2D normal = Vector2D(1.0f, 0.0f);
+		//Vector2D normal = Vector2D(1.0f, 0.0f);
+		Vector2D normal = Vector2D(0.9f, 0.1f);
 		Vector2D reflect = v.ReflectVector(normal);
-		UnitTest::Assert(Vector2D::Equal(reflect, Vector2D(-0.5f, 3.7f), 0.001f));
+		//UnitTest::Assert(Vector2D::Equal(reflect, Vector2D(-0.7f, 3.6f), 0.001f));
+		UnitTest::Assert(Vector2D::Equal(reflect, Vector2D(-1.08, 3.4f), 0.01f));
 	}
-
 	{
 		Vector2D v = Vector2D(0.7f, 3.6f);
 		Vector2D normal = Vector2D(1.0f, 0.0f);
 		Vector2D reflect = Vector2D::ReflectVector(v, normal);
-		UnitTest::Assert(Vector2D::Equal(reflect, Vector2D(-0.5f, 3.7f), 0.001f));
+		UnitTest::Assert(Vector2D::Equal(reflect, Vector2D(-0.7f, 3.6f), 0.001f));
+	}
+	{
+		Vector2D v = Vector2D(2.5, 1.0f);
+		//Vector2D normal = Vector2D(1.0f, 0.0f);
+		//Vector2D rotated = v.RotateDeg(-0.1f);
+		Vector2D rotated = v.RotateDeg(30.0f);
+		//UnitTest::Assert(Vector2D::Equal(rotated, Vector2D(-0.7679f, 5.3301f), 0.001f));
+		UnitTest::Assert(
+			Vector2D::Equal(rotated, Vector2D(2.66506f, -0.3839f), 0.001f));
+	}
+	{
+		Vector2D v = Vector2D(2.5, 0.0f);
+		Vector2D rotated = Vector2D::RotateDeg(v, 30.0f);
+		UnitTest::Assert(Vector2D::Equal(rotated, Vector2D(
+			2.1650f, -1.25f), 0.001f));
+	}
+
+	{
+		Vector2D v = Vector2D(2.5, 0.0f);
+		//Vector2D normal = Vector2D(1.0f, 0.0f);
+		Vector2D rotated = v.RotateRad(0.1f);
+		UnitTest::Assert(Vector2D::Equal(rotated, Vector2D(2.4875104131951f, -0.24958354161707f), 0.001f));
+	}
+	{
+		Vector2D v = Vector2D(2.5, 0.0f);
+		Vector2D rotated = Vector2D::RotateRad(v, 0.1f);
+		UnitTest::Assert(Vector2D::Equal(rotated, Vector2D(2.4875104131951f, -0.24958354161707f), 0.001f));
 	}
 
 #pragma endregion
@@ -339,7 +367,7 @@ int main()
 	}
 	{
 		Vector3D v = Vector3D(0.2f, 5.0f, 0.0f);
-		Vector3D normal = Vector3D(0.1490128f, - 0.309673f, 0.9390942f);
+		Vector3D normal = Vector3D(0.1490128f, -0.309673f, 0.9390942f);
 		Vector3D reflect = v.ReflectVector(normal);
 		UnitTest::Assert(
 			Vector3D::Equal(reflect, Vector3D(0.6525703, 4.059485f, 2.852146f), 0.1f));
@@ -354,7 +382,7 @@ int main()
 
 
 #pragma endregion
-
+	UnitTest::End();
 	//std::cout << "Hello World!\n";
 }
 

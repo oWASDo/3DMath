@@ -109,9 +109,14 @@ bool Vector2D::operator==(Vector2D other) {
 }
 bool Vector2D::Equal(Vector2D other, float offset)
 {
-	bool xEqualitX = ((x - other.x) < offset);
-	float vv = y - other.y;
-	bool yEqualitY = ((vv) < offset);
+	float calcX = (x - other.x);
+	calcX = fabsf(calcX);
+	bool xEqualitX = ((calcX) < offset);
+
+	float calcY = y - other.y;
+	calcY = fabsf(calcY);
+	bool yEqualitY = ((calcY) < offset);
+
 	return xEqualitX && yEqualitY;
 }
 bool Vector2D::Equal(Vector2D a, Vector2D b, float offset) {
@@ -154,15 +159,15 @@ float Vector2D::Dot(Vector2D a, Vector2D b)
 #pragma endregion
 
 #pragma region Angle
-float Vector2D::Angle(Vector2D other) {
+float Vector2D::AngleDeg(Vector2D other) {
 	float dot = Dot(other);
 	float lenght0 = Lenght();
 	float lenght1 = other.Lenght();
 
 	return dot / (lenght0 * lenght1);
 }
-float Vector2D::Angle(Vector2D a, Vector2D b) {
-	return a.Angle(b);
+float Vector2D::AngleDeg(Vector2D a, Vector2D b) {
+	return a.AngleDeg(b);
 }
 #pragma endregion
 
@@ -215,6 +220,61 @@ Vector2D Vector2D::ReflectVector(Vector2D a, Vector2D normalVector) {
 	return a.ReflectVector(normalVector);
 
 }
+Vector2D Vector2D::RotateDeg(const float angle)
+{
+	float rad = angle * 0.017453f;
+
+	float coss = cos(rad);
+	float sinn = sin(rad);
+
+	float x1 = x * coss + y * sinn;
+	float y1 = (-(x * sinn)) + y * coss;
+
+	return Vector2D(x1, y1);
+}
+Vector2D Vector2D::RotateDeg(Vector2D vector, float angle)
+{
+	return vector.RotateDeg(angle);
+}
+Vector2D Vector2D::RotateAboutDeg(Vector2D center, float angle)
+{
+	return RotateDeg(angle) + center;
+}
+Vector2D Vector2D::RotateAboutDeg(Vector2D vector, Vector2D center, float angle)
+{
+	return vector.RotateAboutDeg(center, angle);
+}
+
+
+Vector2D Vector2D::RotateRad(float rad)
+{
+	//float deg = ((rad * 180.0f) / 3.14159265358979323846f);
+
+	float coss = cos(rad);
+	float sinn = sin(rad);
+
+	float x1 = x * coss + y * sinn;
+	float y1 = (-(x * sinn)) + y * coss;
+
+	return Vector2D(x1, y1);
+}
+Vector2D Vector2D::RotateRad(Vector2D vector, float rad)
+{
+	float deg = ((rad * 180.0f) / 3.14159265358979323846f);
+	return vector.RotateDeg(deg);
+}
+Vector2D Vector2D::RotateAboutRad(Vector2D center, float rad)
+{
+	float deg = ((rad * 180.0f) / 3.14159265358979323846f);
+	return RotateAboutDeg(center, deg);
+}
+Vector2D Vector2D::RotateAboutRad(Vector2D vector, Vector2D center, float rad)
+{
+	float deg = ((rad * 180.0f) / 3.14159265358979323846f);
+	return vector.RotateAboutDeg(center, deg);
+}
+
+
 #pragma endregion
 
 #pragma region GetSet

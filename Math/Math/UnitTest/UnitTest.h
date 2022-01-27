@@ -11,8 +11,11 @@ public:
 
 	static void Assert(bool assetOk);
 	static void Assert(bool assetOk, std::string assertName);
+	static void End();
 
 	static int assertNumber;
+	static int assertNumberWrong;
+
 
 
 	/*void Assert(bool assetOk) {

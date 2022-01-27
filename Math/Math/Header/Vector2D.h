@@ -64,8 +64,8 @@ public:
 #pragma endregion
 
 #pragma region Angle
-	float Angle(Vector2D other);
-	static float Angle(Vector2D a, Vector2D b);
+	float AngleDeg(Vector2D other);
+	static float AngleDeg(Vector2D a, Vector2D b);
 
 #pragma endregion
 
@@ -85,6 +85,20 @@ public:
 	Vector2D ReflectVector(Vector2D normalVector);
 	static Vector2D ReflectVector(Vector2D a, Vector2D normalVector);
 
+#pragma endregion
+
+#pragma region Rotate
+	Vector2D RotateDeg(float angle);
+	static Vector2D RotateDeg(Vector2D vector, float angle);
+
+	Vector2D RotateAboutDeg(Vector2D center, float angle);
+	static Vector2D RotateAboutDeg(Vector2D vector, Vector2D center, float angle);
+
+	Vector2D RotateRad(float angle);
+	static Vector2D RotateRad(Vector2D vector, float angle);
+
+	Vector2D RotateAboutRad(Vector2D center, float angle);
+	static Vector2D RotateAboutRad(Vector2D vector, Vector2D center, float angle);
 #pragma endregion
 
 #pragma region GetSet
