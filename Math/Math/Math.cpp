@@ -4,12 +4,14 @@
 #include <iostream>
 #include "Header/Vector2D.h"
 #include "Header/Vector3D.h"
+#include "Header/Matrix4x4.h"
 #include "UnitTest/UnitTest.h"
 
 int main()
 {
 #pragma region Vector2D
 
+	
 	{
 		Vector2D v = Vector2D();
 		UnitTest::Assert(v.GetX() == 0.0f);
@@ -380,6 +382,52 @@ int main()
 			Vector3D::Equal(reflect, Vector3D(0.6525703, 4.059485f, 2.852146f), 0.1f));
 	}
 
+
+	{
+
+		std::vector<float> vector;
+		vector.push_back(1);
+		vector.push_back(2);
+		vector.push_back(3);
+		vector.push_back(4);
+		vector.push_back(5);
+		vector.push_back(6);
+		vector.push_back(7);
+		vector.push_back(8);
+		vector.push_back(9);
+		vector.push_back(10);
+		vector.push_back(11);
+		vector.push_back(12);
+		vector.push_back(13);
+		vector.push_back(14);
+		vector.push_back(15);
+		vector.push_back(16);
+
+		std::vector<float> vector1;
+		vector1.push_back(1);
+		vector1.push_back(2);
+		vector1.push_back(3);
+		vector1.push_back(4);
+		vector1.push_back(5);
+		vector1.push_back(6);
+		vector1.push_back(7);
+		vector1.push_back(8);
+		vector1.push_back(9);
+		vector1.push_back(10);
+		vector1.push_back(11);
+		vector1.push_back(12);
+		vector1.push_back(13);
+		vector1.push_back(14);
+		vector1.push_back(15);
+		vector1.push_back(16);
+		Matrix4x4 m = Matrix4x4(vector);
+		Matrix4x4 m1 = Matrix4x4(vector1);
+		Matrix4x4 mul = m * m1;
+		bool b = m == mul;
+		Matrix4x4 add = m + m1;
+		Matrix4x4 sub = m - m1;
+		Matrix4x4 t = m.Transpose();
+	}
 
 #pragma endregion
 	UnitTest::End();

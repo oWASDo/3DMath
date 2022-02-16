@@ -30,6 +30,9 @@
     <ClCompile Include="Source\Vector3D.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Matrix4x4.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Vector2D.h">
@@ -42,6 +45,9 @@
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="Header\Vector3D.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Matrix4x4.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
   </ItemGroup>
