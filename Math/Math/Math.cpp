@@ -11,7 +11,7 @@ int main()
 {
 #pragma region Vector2D
 
-	
+
 	{
 		Vector2D v = Vector2D();
 		UnitTest::Assert(v.GetX() == 0.0f);
@@ -385,6 +385,8 @@ int main()
 
 	{
 
+#pragma region First
+
 		std::vector<float> vector;
 		vector.push_back(1);
 		vector.push_back(2);
@@ -403,6 +405,10 @@ int main()
 		vector.push_back(15);
 		vector.push_back(16);
 
+#pragma endregion
+
+#pragma region Second
+
 		std::vector<float> vector1;
 		vector1.push_back(1);
 		vector1.push_back(2);
@@ -420,15 +426,176 @@ int main()
 		vector1.push_back(14);
 		vector1.push_back(15);
 		vector1.push_back(16);
+#pragma endregion
+#pragma region Mul
+
+		std::vector<float> mulV;
+		mulV.push_back(90);
+		mulV.push_back(100);
+		mulV.push_back(110);
+		mulV.push_back(120);
+		mulV.push_back(202);
+		mulV.push_back(228);
+		mulV.push_back(254);
+		mulV.push_back(280);
+		mulV.push_back(314);
+		mulV.push_back(356);
+		mulV.push_back(398);
+		mulV.push_back(440);
+		mulV.push_back(426);
+		mulV.push_back(484);
+		mulV.push_back(542);
+		mulV.push_back(600);
+#pragma endregion
+
 		Matrix4x4 m = Matrix4x4(vector);
 		Matrix4x4 m1 = Matrix4x4(vector1);
+		bool b = m == m1;
+		UnitTest::Assert(b == true);
 		Matrix4x4 mul = m * m1;
-		bool b = m == mul;
-		Matrix4x4 add = m + m1;
-		Matrix4x4 sub = m - m1;
-		Matrix4x4 t = m.Transpose();
+		Matrix4x4 mochMul = Matrix4x4(mulV);
+		b = mul == mochMul;
+		UnitTest::Assert(b == true);
+
+		b = m == mul;
+		UnitTest::Assert(b == false);
 	}
 
+	{
+
+#pragma region First
+
+		std::vector<float> vector;
+		vector.push_back(1);
+		vector.push_back(2);
+		vector.push_back(3);
+		vector.push_back(4);
+		vector.push_back(5);
+		vector.push_back(6);
+		vector.push_back(7);
+		vector.push_back(8);
+		vector.push_back(9);
+		vector.push_back(10);
+		vector.push_back(11);
+		vector.push_back(12);
+		vector.push_back(13);
+		vector.push_back(14);
+		vector.push_back(15);
+		vector.push_back(16);
+
+#pragma endregion
+
+#pragma region Second
+
+		std::vector<float> vector1;
+		vector1.push_back(1);
+		vector1.push_back(2);
+		vector1.push_back(3);
+		vector1.push_back(4);
+		vector1.push_back(5);
+		vector1.push_back(6);
+		vector1.push_back(7);
+		vector1.push_back(8);
+		vector1.push_back(9);
+		vector1.push_back(10);
+		vector1.push_back(11);
+		vector1.push_back(12);
+		vector1.push_back(13);
+		vector1.push_back(14);
+		vector1.push_back(15);
+		vector1.push_back(16);
+#pragma endregion
+#pragma region Sum
+
+		std::vector<float> sumV;
+		sumV.push_back(2);
+		sumV.push_back(4);
+		sumV.push_back(6);
+		sumV.push_back(8);
+		sumV.push_back(10);
+		sumV.push_back(12);
+		sumV.push_back(14);
+		sumV.push_back(16);
+		sumV.push_back(18);
+		sumV.push_back(20);
+		sumV.push_back(22);
+		sumV.push_back(24);
+		sumV.push_back(26);
+		sumV.push_back(28);
+		sumV.push_back(30);
+		sumV.push_back(32);
+#pragma endregion
+
+		Matrix4x4 m = Matrix4x4(vector);
+		Matrix4x4 m1 = Matrix4x4(vector1);
+		Matrix4x4 add = m + m1;
+		Matrix4x4 mochSum = Matrix4x4(sumV);
+		bool b = mochSum == add;
+		UnitTest::Assert(b == true);
+
+		Matrix4x4 sub = m - m1;
+		b = sub == Matrix4x4();
+
+		UnitTest::Assert(b == true);
+
+		Matrix4x4 t = m.Transpose();
+
+	}
+	{
+#pragma region First
+
+		std::vector<float> vector;
+		vector.push_back(1);
+		vector.push_back(2);
+		vector.push_back(3);
+		vector.push_back(4);
+		vector.push_back(5);
+		vector.push_back(6);
+		vector.push_back(7);
+		vector.push_back(8);
+		vector.push_back(9);
+		vector.push_back(10);
+		vector.push_back(11);
+		vector.push_back(12);
+		vector.push_back(13);
+		vector.push_back(14);
+		vector.push_back(15);
+		vector.push_back(16);
+
+#pragma endregion
+
+#pragma region T
+
+		std::vector<float> t;
+		t.push_back(1);
+		t.push_back(5);
+		t.push_back(9);
+		t.push_back(13);
+		t.push_back(2);
+		t.push_back(6);
+		t.push_back(10);
+		t.push_back(14);
+		t.push_back(3);
+		t.push_back(7);
+		t.push_back(11);
+		t.push_back(15);
+		t.push_back(4);
+		t.push_back(8);
+		t.push_back(12);
+		t.push_back(16);
+
+#pragma endregion
+		Matrix4x4 m = Matrix4x4(vector);
+		Matrix4x4 mochT = Matrix4x4(t);
+
+		Matrix4x4 tM = m.Transpose();
+
+		UnitTest::Assert(mochT == tM);
+
+
+
+
+	}
 #pragma endregion
 	UnitTest::End();
 	//std::cout << "Hello World!\n";

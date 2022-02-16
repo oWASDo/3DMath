@@ -23,20 +23,24 @@ Matrix4x4 Matrix4x4::operator*(Matrix4x4 matrix)
 {
 	Matrix4x4 result = Matrix4x4();
 	Matrix4x4 transpose = matrix.Transpose();
-	int index = 0;
-	int index2 = 0;
+	int columnIndex = 0;
+	int rowIndex = 0;
 	for (int i = 0; i < 16; i++)
 	{
-		result.elements[i] = elements[0 + index2] * matrix.elements[0 + index] + elements[1 + index2] * matrix.elements[4 + index] +
-			elements[2 + index2] * matrix.elements[8 + index] + elements[3 + index2] * matrix.elements[12 + index];
-		index++;
-		if (index == 4)
+		result.elements[i] =
+			elements[0 + rowIndex] * matrix.elements[0 + columnIndex] +
+			elements[1 + rowIndex] * matrix.elements[4 + columnIndex] +
+			elements[2 + rowIndex] * matrix.elements[8 + columnIndex] +
+			elements[3 + rowIndex] * matrix.elements[12 + columnIndex];
+
+		columnIndex++;
+
+		if (columnIndex == 4)
 		{
-			index = 0;
-			index2 += 4;
+			columnIndex = 0;
+			rowIndex += 4;
 		}
 	}
-
 
 	return result;
 }
