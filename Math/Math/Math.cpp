@@ -596,6 +596,47 @@ int main()
 
 
 	}
+
+	{
+#pragma region First
+
+		std::vector<float> vector;
+		vector.push_back(1);
+		vector.push_back(2);
+		vector.push_back(3);
+		vector.push_back(4);
+		vector.push_back(5);
+		vector.push_back(6);
+		vector.push_back(7);
+		vector.push_back(8);
+		vector.push_back(9);
+		vector.push_back(10);
+		vector.push_back(11);
+		vector.push_back(12);
+		vector.push_back(13);
+		vector.push_back(14);
+		vector.push_back(15);
+		vector.push_back(16);
+
+#pragma endregion
+
+#pragma region Vector
+
+		Vector3D vec = Vector3D(1, 2, 3);
+
+#pragma endregion
+		Matrix4x4 m = Matrix4x4(vector);
+		Vector3D multi = m * vec;
+
+		UnitTest::Assert(multi == Vector3D(14, 38, 62));
+	}
+
+	{
+		Vector3D vec = Vector3D(1, 2, 3);
+
+		Vector3D rotatedVector = vec.Rotate(Vector3D(1, 2, 3));
+
+	}
 #pragma endregion
 	UnitTest::End();
 	//std::cout << "Hello World!\n";

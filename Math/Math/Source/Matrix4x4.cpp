@@ -45,6 +45,32 @@ Matrix4x4 Matrix4x4::operator*(Matrix4x4 matrix)
 	return result;
 }
 
+Vector3D Matrix4x4::operator*(Vector3D vector)
+{
+	Vector3D result = Vector3D();
+	result.SetX(elements[0] * vector.GetX() +
+		elements[1] * vector.GetY() +
+		elements[2] * vector.GetZ() +
+		elements[3] * 0);
+
+	result.SetY(elements[0 + 4] * vector.GetX() +
+		elements[1 + 4] * vector.GetY() +
+		elements[2 + 4] * vector.GetZ() +
+		elements[3 + 4] * 0);
+
+	result.SetZ(elements[0 + 8] * vector.GetX() +
+		elements[1 + 8] * vector.GetY() +
+		elements[2 + 8] * vector.GetZ() +
+		elements[3 + 8] * 0);
+
+	float w =
+		elements[0 + 12] * vector.GetX() +
+		elements[1 + 12] * vector.GetY() +
+		elements[2 + 12] * vector.GetZ() +
+		elements[3 + 12] * 0;
+	return result;
+}
+
 Matrix4x4 Matrix4x4::operator+(Matrix4x4 matrix)
 {
 	Matrix4x4 result = Matrix4x4();

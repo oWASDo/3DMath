@@ -1,4 +1,5 @@
 #include "../Header/Vector3D.h"
+#include "../Header/Matrix4x4.h"
 
 #pragma region Init
 
@@ -248,4 +249,92 @@ void Vector3D::SetZ(float z) {
 	this->z = z;
 }
 #pragma endregion
+
+#pragma endregion
+Vector3D Vector3D::Rotate(Vector3D rotate) {
+	Vector3D result = *this;
+#pragma region First
+
+	std::vector<float> first;
+	first.push_back(1);
+	first.push_back(0);
+	first.push_back(0);
+	first.push_back(0);
+
+	first.push_back(0);
+	first.push_back(cosf(rotate.GetX()));
+	first.push_back(sinf(rotate.GetX()));
+	first.push_back(0);
+
+	first.push_back(0);
+	first.push_back(-sinf(rotate.GetX()));
+	first.push_back(cosf(rotate.GetX()));
+	first.push_back(0);
+
+	first.push_back(0);
+	first.push_back(0);
+	first.push_back(0);
+	first.push_back(1);
+	Matrix4x4 m1 = Matrix4x4(first);
+
+	result = m1 * result;
+#pragma endregion
+
+#pragma region Second
+	std::vector<float> second;
+	second.push_back(cosf(rotate.GetY()));
+	second.push_back(0);
+	second.push_back(-sinf(rotate.GetY()));
+	second.push_back(0);
+
+	second.push_back(0);
+	second.push_back(1);
+	second.push_back(0);
+	second.push_back(0);
+
+	second.push_back(sinf(rotate.GetY()));
+	second.push_back(0);
+	second.push_back(cosf(rotate.GetY()));
+	second.push_back(0);
+
+	second.push_back(0);
+	second.push_back(0);
+	second.push_back(0);
+	second.push_back(1);
+	Matrix4x4 m2 = Matrix4x4(second);
+	result = m2 * result;
+
+#pragma endregion
+
+#pragma region Third
+
+	std::vector<float> third;
+	third.push_back(cosf(rotate.GetZ()));
+	third.push_back(-sinf(rotate.GetZ()));
+	third.push_back(0);
+	third.push_back(0);
+
+	third.push_back(sinf(rotate.GetZ()));
+	third.push_back(cosf(rotate.GetZ()));
+	third.push_back(0);
+	third.push_back(0);
+
+	third.push_back(0);
+	third.push_back(0);
+	third.push_back(1);
+	third.push_back(0);
+
+	third.push_back(0);
+	third.push_back(0);
+	third.push_back(0);
+	third.push_back(1);
+	Matrix4x4 m3 = Matrix4x4(third);
+	result = m3 * result;
+
+#pragma endregion
+
+
+	return result;
+}
+#pragma region Rotate
 

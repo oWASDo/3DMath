@@ -1,7 +1,7 @@
 #pragma once
 #include <math.h> 
+#include <vector>
 #include "MathUtils.h"
-
 class Vector3D
 {
 public:
@@ -94,6 +94,10 @@ public:
 	void SetX(float X);
 	void SetY(float y);
 	void SetZ(float y);
+
+#pragma endregion
+	Vector3D Rotate(Vector3D vec);
+#pragma region Rotate
 
 #pragma endregion
 
