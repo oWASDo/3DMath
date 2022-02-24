@@ -1,10 +1,13 @@
 // Math.cpp : Questo file contiene la funzione 'main', in cui inizia e termina l'esecuzione del programma.
-//
+
 
 #include <iostream>
 #include "Header/Vector2D.h"
 #include "Header/Vector3D.h"
+#include "Header/Quaternion.h"
 #include "Header/Matrix4x4.h"
+#include "Header/MathUtils.h"
+
 #include "UnitTest/UnitTest.h"
 
 int main()
@@ -41,6 +44,17 @@ int main()
 		UnitTest::Assert(v == v2);
 	}
 	{
+		Vector2D v = Vector2D(1.0f, 1.0f);
+		Vector2D v2 = Vector2D(3.0f, 1.0f);
+
+		UnitTest::Assert(v != v2);
+
+		v = Vector2D(1.0f, 1.0f);
+		v2 = Vector2D(1.0f, 5.0f);
+
+		UnitTest::Assert(v != v2);
+	}
+	{
 		Vector2D v = Vector2D::One();
 
 		UnitTest::Assert(v.GetX() == 1.0f && v.GetY() == 1.0f);
@@ -71,15 +85,15 @@ int main()
 		UnitTest::Assert(result == Vector2D(10.0f, 10.428f));
 	}
 	{
-		Vector2D v = Vector2D(5.0f, 5.214);
+		Vector2D v = Vector2D(5.0f, 5.214f);
 		Vector2D v2 = Vector2D(2.0f, 2.0f);
 		Vector2D result = v / v2;
 		UnitTest::Assert(result == Vector2D(2.5f, 2.607f));
 	}
 	{
-		Vector2D v = Vector2D(5.0f, 5.214);
+		Vector2D v = Vector2D(5.0f, 5.214f);
 		Vector2D result = v + 2.0f;
-		UnitTest::Assert(result == Vector2D(7.0f, 7.214));
+		UnitTest::Assert(result == Vector2D(7.0f, 7.214f));
 	}
 	{
 		Vector2D v = Vector2D(5.0f, 6.0f);
@@ -162,7 +176,7 @@ int main()
 		Vector2D v = Vector2D(0.2f, 5.0f);
 		Vector2D v1 = Vector2D(5.2f, 1.0f);
 		Vector2D lerped = v.Lerp(v1, 0.25f);
-		UnitTest::Assert(lerped.Equal(Vector2D(1.45, 4.0f), 0.001f));
+		UnitTest::Assert(lerped.Equal(Vector2D(1.45f, 4.0f), 0.001f));
 	}
 
 	{
@@ -175,11 +189,10 @@ int main()
 
 	{
 		Vector2D v = Vector2D(0.7f, 3.6f);
-		//Vector2D normal = Vector2D(1.0f, 0.0f);
+
 		Vector2D normal = Vector2D(0.9f, 0.1f);
 		Vector2D reflect = v.ReflectVector(normal);
-		//UnitTest::Assert(Vector2D::Equal(reflect, Vector2D(-0.7f, 3.6f), 0.001f));
-		UnitTest::Assert(Vector2D::Equal(reflect, Vector2D(-1.08, 3.4f), 0.01f));
+		UnitTest::Assert(Vector2D::Equal(reflect, Vector2D(-1.08f, 3.4f), 0.01f));
 	}
 	{
 		Vector2D v = Vector2D(0.7f, 3.6f);
@@ -189,10 +202,7 @@ int main()
 	}
 	{
 		Vector2D v = Vector2D(2.5, 1.0f);
-		//Vector2D normal = Vector2D(1.0f, 0.0f);
-		//Vector2D rotated = v.RotateDeg(-0.1f);
 		Vector2D rotated = v.RotateDeg(30.0f);
-		//UnitTest::Assert(Vector2D::Equal(rotated, Vector2D(-0.7679f, 5.3301f), 0.001f));
 		UnitTest::Assert(
 			Vector2D::Equal(rotated, Vector2D(2.66506f, -0.3839f), 0.001f));
 	}
@@ -205,7 +215,6 @@ int main()
 
 	{
 		Vector2D v = Vector2D(2.5, 0.0f);
-		//Vector2D normal = Vector2D(1.0f, 0.0f);
 		Vector2D rotated = v.RotateRad(0.1f);
 		UnitTest::Assert(Vector2D::Equal(rotated, Vector2D(2.4875104131951f, -0.24958354161707f), 0.001f));
 	}
@@ -258,6 +267,23 @@ int main()
 
 		UnitTest::Assert(v == v2);
 	}
+
+	{
+		Vector3D v = Vector3D(1.0f, 1.0f, 1.0f);
+		Vector3D v2 = Vector3D(2.0f, 1.0f, 1.0f);
+
+		UnitTest::Assert(v != v2);
+
+		v = Vector3D(1.0f, 1.0f, 1.0f);
+		v2 = Vector3D(1.0f, 2.0f, 1.0f);
+
+		UnitTest::Assert(v != v2);
+
+		v = Vector3D(1.0f, 1.0f, 1.0f);
+		v2 = Vector3D(1.0f, 1.0f, 2.0f);
+
+		UnitTest::Assert(v != v2);
+	}
 	{
 		Vector3D v = Vector3D::One();
 
@@ -287,15 +313,15 @@ int main()
 		UnitTest::Assert(result == Vector3D(10.0f, 10.428f, 6.0f));
 	}
 	{
-		Vector3D v = Vector3D(5.0f, 5.214, 5.0f);
+		Vector3D v = Vector3D(5.0f, 5.214f, 5.0f);
 		Vector3D v2 = Vector3D(2.0f, 2.0f, 2.0f);
 		Vector3D result = v / v2;
 		UnitTest::Assert(result == Vector3D(2.5f, 2.607f, 2.5f));
 	}
 	{
-		Vector3D v = Vector3D(5.0f, 5.214, 4.0f);
+		Vector3D v = Vector3D(5.0f, 5.214f, 4.0f);
 		Vector3D result = v + 2.0f;
-		UnitTest::Assert(result == Vector3D(7.0f, 7.214, 6.0f));
+		UnitTest::Assert(result == Vector3D(7.0f, 7.214f, 6.0f));
 	}
 	{
 		Vector3D v = Vector3D(5.0f, 6.0f, 2.0f);
@@ -365,87 +391,106 @@ int main()
 		Vector3D v = Vector3D(0.2f, 5.0f, 0.0f);
 		Vector3D v1 = Vector3D(5.2f, 1.0f, 1.0f);
 		Vector3D lerped = v.Lerp(v1, 0.25f);
-		UnitTest::Assert(lerped.Equal(Vector3D(1.45, 4.0f, 0.25f), 0.001f));
+		UnitTest::Assert(lerped.Equal(Vector3D(1.45f, 4.0f, 0.25f), 0.001f));
 	}
 	{
 		Vector3D v = Vector3D(0.2f, 5.0f, 0.0f);
 		Vector3D normal = Vector3D(0.1490128f, -0.309673f, 0.9390942f);
 		Vector3D reflect = v.ReflectVector(normal);
 		UnitTest::Assert(
-			Vector3D::Equal(reflect, Vector3D(0.6525703, 4.059485f, 2.852146f), 0.1f));
+			Vector3D::Equal(reflect, Vector3D(0.6525703f, 4.059485f, 2.852146f), 0.1f));
 	}
 	{
 		Vector3D v = Vector3D(0.2f, 5.0f, 0.0f);
 		Vector3D normal = Vector3D(0.1490128f, -0.309673f, 0.9390942f);
 		Vector3D reflect = Vector3D::ReflectVector(v, normal);
 		UnitTest::Assert(
-			Vector3D::Equal(reflect, Vector3D(0.6525703, 4.059485f, 2.852146f), 0.1f));
+			Vector3D::Equal(reflect, Vector3D(0.6525703f, 4.059485f, 2.852146f), 0.1f));
 	}
 
 
 	{
-
 #pragma region First
 
 		std::vector<float> vector;
-		vector.push_back(1);
-		vector.push_back(2);
-		vector.push_back(3);
-		vector.push_back(4);
-		vector.push_back(5);
-		vector.push_back(6);
-		vector.push_back(7);
-		vector.push_back(8);
-		vector.push_back(9);
-		vector.push_back(10);
-		vector.push_back(11);
-		vector.push_back(12);
-		vector.push_back(13);
-		vector.push_back(14);
-		vector.push_back(15);
-		vector.push_back(16);
+		vector.push_back(1); vector.push_back(2); vector.push_back(3); vector.push_back(4);
+		vector.push_back(5); vector.push_back(6); vector.push_back(7); vector.push_back(8);
+		vector.push_back(9); vector.push_back(10); vector.push_back(11); vector.push_back(12);
+		vector.push_back(13); vector.push_back(14); vector.push_back(15); vector.push_back(16);
 
 #pragma endregion
 
 #pragma region Second
 
 		std::vector<float> vector1;
-		vector1.push_back(1);
-		vector1.push_back(2);
-		vector1.push_back(3);
-		vector1.push_back(4);
-		vector1.push_back(5);
-		vector1.push_back(6);
-		vector1.push_back(7);
-		vector1.push_back(8);
-		vector1.push_back(9);
-		vector1.push_back(10);
-		vector1.push_back(11);
-		vector1.push_back(12);
-		vector1.push_back(13);
-		vector1.push_back(14);
-		vector1.push_back(15);
-		vector1.push_back(16);
+		vector1.push_back(1); vector1.push_back(2); vector1.push_back(3); vector1.push_back(4);
+		vector1.push_back(5); vector1.push_back(6); vector1.push_back(7); vector1.push_back(8);
+		vector1.push_back(9); vector1.push_back(10); vector1.push_back(11); vector1.push_back(12);
+		vector1.push_back(13); vector1.push_back(14); vector1.push_back(15); vector1.push_back(16);
+#pragma endregion
+
+		Matrix4x4 m = Matrix4x4(vector);
+		Matrix4x4 m1 = Matrix4x4(vector1);
+
+		UnitTest::Assert(m == m1);
+
+	}
+
+
+	{
+#pragma region First
+
+		std::vector<float> vector;
+		vector.push_back(1); vector.push_back(2); vector.push_back(3); vector.push_back(4);
+		vector.push_back(5); vector.push_back(6); vector.push_back(7); vector.push_back(8);
+		vector.push_back(9); vector.push_back(10); vector.push_back(11); vector.push_back(12);
+		vector.push_back(13); vector.push_back(14);	vector.push_back(15); vector.push_back(16);
+
+#pragma endregion
+
+#pragma region Second
+
+		std::vector<float> vector1;
+		vector1.push_back(1); vector1.push_back(2); vector1.push_back(3); vector1.push_back(4);
+		vector1.push_back(5); vector1.push_back(6); vector1.push_back(7); vector1.push_back(8);
+		vector1.push_back(9); vector1.push_back(10); vector1.push_back(4); vector1.push_back(12);
+		vector1.push_back(13); vector1.push_back(14); vector1.push_back(15); vector1.push_back(16);
+#pragma endregion
+
+		Matrix4x4 m = Matrix4x4(vector);
+		Matrix4x4 m1 = Matrix4x4(vector1);
+
+		UnitTest::Assert(m != m1);
+
+	}
+
+	{
+
+#pragma region First
+
+		std::vector<float> vector;
+		vector.push_back(1); vector.push_back(2); vector.push_back(3); vector.push_back(4);
+		vector.push_back(5); vector.push_back(6); vector.push_back(7); vector.push_back(8);
+		vector.push_back(9); vector.push_back(10); vector.push_back(11); vector.push_back(12);
+		vector.push_back(13); vector.push_back(14); vector.push_back(15); vector.push_back(16);
+
+#pragma endregion
+
+#pragma region Second
+
+		std::vector<float> vector1;
+		vector1.push_back(1);	vector1.push_back(2);	vector1.push_back(3);	vector1.push_back(4);
+		vector1.push_back(5);	vector1.push_back(6);	vector1.push_back(7);	vector1.push_back(8);
+		vector1.push_back(9);	vector1.push_back(10);	vector1.push_back(11);	vector1.push_back(12);
+		vector1.push_back(13);	vector1.push_back(14);	vector1.push_back(15);	vector1.push_back(16);
 #pragma endregion
 #pragma region Mul
 
 		std::vector<float> mulV;
-		mulV.push_back(90);
-		mulV.push_back(100);
-		mulV.push_back(110);
-		mulV.push_back(120);
-		mulV.push_back(202);
-		mulV.push_back(228);
-		mulV.push_back(254);
-		mulV.push_back(280);
-		mulV.push_back(314);
-		mulV.push_back(356);
-		mulV.push_back(398);
-		mulV.push_back(440);
-		mulV.push_back(426);
-		mulV.push_back(484);
-		mulV.push_back(542);
-		mulV.push_back(600);
+		mulV.push_back(90); mulV.push_back(100); mulV.push_back(110); mulV.push_back(120); 
+		mulV.push_back(202); mulV.push_back(228); mulV.push_back(254); mulV.push_back(280);
+		mulV.push_back(314); mulV.push_back(356); mulV.push_back(398); mulV.push_back(440);
+		mulV.push_back(426); mulV.push_back(484); mulV.push_back(542); mulV.push_back(600);
 #pragma endregion
 
 		Matrix4x4 m = Matrix4x4(vector);
@@ -466,44 +511,20 @@ int main()
 #pragma region First
 
 		std::vector<float> vector;
-		vector.push_back(1);
-		vector.push_back(2);
-		vector.push_back(3);
-		vector.push_back(4);
-		vector.push_back(5);
-		vector.push_back(6);
-		vector.push_back(7);
-		vector.push_back(8);
-		vector.push_back(9);
-		vector.push_back(10);
-		vector.push_back(11);
-		vector.push_back(12);
-		vector.push_back(13);
-		vector.push_back(14);
-		vector.push_back(15);
-		vector.push_back(16);
+		vector.push_back(1); vector.push_back(2); vector.push_back(3); vector.push_back(4);
+		vector.push_back(5); vector.push_back(6); vector.push_back(7); vector.push_back(8);
+		vector.push_back(9); vector.push_back(10); vector.push_back(11); vector.push_back(12);
+		vector.push_back(13); vector.push_back(14);	vector.push_back(15); vector.push_back(16);
 
 #pragma endregion
 
 #pragma region Second
 
 		std::vector<float> vector1;
-		vector1.push_back(1);
-		vector1.push_back(2);
-		vector1.push_back(3);
-		vector1.push_back(4);
-		vector1.push_back(5);
-		vector1.push_back(6);
-		vector1.push_back(7);
-		vector1.push_back(8);
-		vector1.push_back(9);
-		vector1.push_back(10);
-		vector1.push_back(11);
-		vector1.push_back(12);
-		vector1.push_back(13);
-		vector1.push_back(14);
-		vector1.push_back(15);
-		vector1.push_back(16);
+		vector1.push_back(1); vector1.push_back(2); vector1.push_back(3); vector1.push_back(4);
+		vector1.push_back(5); vector1.push_back(6); vector1.push_back(7); vector1.push_back(8);
+		vector1.push_back(9); vector1.push_back(10); vector1.push_back(11); vector1.push_back(12);
+		vector1.push_back(13); vector1.push_back(14); vector1.push_back(15); vector1.push_back(16);
 #pragma endregion
 #pragma region Sum
 
@@ -545,44 +566,20 @@ int main()
 #pragma region First
 
 		std::vector<float> vector;
-		vector.push_back(1);
-		vector.push_back(2);
-		vector.push_back(3);
-		vector.push_back(4);
-		vector.push_back(5);
-		vector.push_back(6);
-		vector.push_back(7);
-		vector.push_back(8);
-		vector.push_back(9);
-		vector.push_back(10);
-		vector.push_back(11);
-		vector.push_back(12);
-		vector.push_back(13);
-		vector.push_back(14);
-		vector.push_back(15);
-		vector.push_back(16);
+		vector.push_back(1); vector.push_back(2); vector.push_back(3); vector.push_back(4);
+		vector.push_back(5); vector.push_back(6); vector.push_back(7); vector.push_back(8);
+		vector.push_back(9); vector.push_back(10); vector.push_back(11); vector.push_back(12);
+		vector.push_back(13); vector.push_back(14); vector.push_back(15); vector.push_back(16);
 
 #pragma endregion
 
 #pragma region T
 
 		std::vector<float> t;
-		t.push_back(1);
-		t.push_back(5);
-		t.push_back(9);
-		t.push_back(13);
-		t.push_back(2);
-		t.push_back(6);
-		t.push_back(10);
-		t.push_back(14);
-		t.push_back(3);
-		t.push_back(7);
-		t.push_back(11);
-		t.push_back(15);
-		t.push_back(4);
-		t.push_back(8);
-		t.push_back(12);
-		t.push_back(16);
+		t.push_back(1); t.push_back(5); t.push_back(9); t.push_back(13);
+		t.push_back(2); t.push_back(6); t.push_back(10); t.push_back(14);
+		t.push_back(3); t.push_back(7); t.push_back(11); t.push_back(15);
+		t.push_back(4); t.push_back(8); t.push_back(12); t.push_back(16);
 
 #pragma endregion
 		Matrix4x4 m = Matrix4x4(vector);
@@ -601,22 +598,10 @@ int main()
 #pragma region First
 
 		std::vector<float> vector;
-		vector.push_back(1);
-		vector.push_back(2);
-		vector.push_back(3);
-		vector.push_back(4);
-		vector.push_back(5);
-		vector.push_back(6);
-		vector.push_back(7);
-		vector.push_back(8);
-		vector.push_back(9);
-		vector.push_back(10);
-		vector.push_back(11);
-		vector.push_back(12);
-		vector.push_back(13);
-		vector.push_back(14);
-		vector.push_back(15);
-		vector.push_back(16);
+		vector.push_back(1); vector.push_back(2); vector.push_back(3); vector.push_back(4);
+		vector.push_back(5); vector.push_back(6); vector.push_back(7); vector.push_back(8);
+		vector.push_back(9); vector.push_back(10); vector.push_back(11); vector.push_back(12);
+		vector.push_back(13); vector.push_back(14);	vector.push_back(15); vector.push_back(16);
 
 #pragma endregion
 
@@ -634,9 +619,126 @@ int main()
 	{
 		Vector3D vec = Vector3D(1, 2, 3);
 
-		Vector3D rotatedVector = vec.Rotate(Vector3D(1, 2, 3));
+		Vector3D rotatedVector =
+			vec.RotateRad(Vector3D(1, 2, 3));
 
 	}
+
+	{
+
+		Quaternion q = Quaternion(2.0f, 4.0f, 5.0f, 7.0f);
+		Quaternion equalQ = Quaternion(2.0f, 4.0f, 5.0f, 7.0f);
+
+		UnitTest::Assert(q.Equal(equalQ, 0.001f));
+
+	}
+
+	{
+
+		Quaternion q = Quaternion(2.0f, 4.0f, 5.0f, 7.0f);
+		Quaternion equalQ = Quaternion(2.0f, 4.0f, 5.0f, 7.0f);
+
+		UnitTest::Assert(q == equalQ);
+
+	}
+
+
+	{
+
+		Quaternion q = Quaternion(2.0f, 4.0f, 5.0f, 7.0f);
+		Quaternion notEqualQ0 = Quaternion(4.0f, 4.0f, 5.0f, 7.0f);
+		Quaternion notEqualQ1 = Quaternion(2.0f, 44.0f, 5.0f, 7.0f);
+		Quaternion notEqualQ2 = Quaternion(2.0f, 4.0f, 35.0f, 7.0f);
+		Quaternion notEqualQ3 = Quaternion(2.0f, 4.0f, 5.0f, 27.0f);
+		Quaternion notEqualQ4 = Quaternion(2.0f, 4.0f, 55.0f, 27.0f);
+		Quaternion notEqualQ5 = Quaternion(2.0f, 64.0f, 5.0f, 27.0f);
+		Quaternion notEqualQ6 = Quaternion(22.0f, 64.0f, 5.0f, 27.0f);
+
+		UnitTest::Assert(q != notEqualQ0);
+		UnitTest::Assert(q != notEqualQ1);
+		UnitTest::Assert(q != notEqualQ2);
+		UnitTest::Assert(q != notEqualQ3);
+		UnitTest::Assert(q != notEqualQ4);
+		UnitTest::Assert(q != notEqualQ5);
+		UnitTest::Assert(q != notEqualQ6);
+
+	}
+
+	{
+		Vector3D v = Vector3D(1, 2, 3);
+		Quaternion q = Quaternion(v);
+		Quaternion equalQ = Quaternion(0.7549338f, -0.2061492f, 0.5015091f, -0.3688714f);
+
+		UnitTest::Assert(q.Equal(equalQ, 0.001f));
+
+	}
+	{
+		Vector3D v = Vector3D(
+			1.0f,
+			2.0f,
+			3.0f);
+
+		float xDeg = 1;
+		float yDeg = 2;
+		float zDeg = 3;
+
+		Vector3D rotated =
+			v.RotateRad(Quaternion(Vector3D(
+				xDeg * MathUtils::Deg2Rad,
+				yDeg * MathUtils::Deg2Rad,
+				zDeg * MathUtils::Deg2Rad)));
+
+		UnitTest::Assert(
+			rotated.Equal(
+				Vector3D(0.9993439f, 1.996926f, 3.002266f), 0.001f));
+	}
+
+	{
+		Vector3D v = Vector3D(
+			2.0f,
+			4.0f,
+			6.0f);
+
+		float xDeg = 1;
+		float yDeg = 2;
+		float zDeg = 3;
+
+		Vector3D rotated =
+			v.RotateRad(Quaternion(Vector3D(
+				xDeg * MathUtils::Deg2Rad,
+				yDeg * MathUtils::Deg2Rad,
+				zDeg * MathUtils::Deg2Rad)));
+
+		UnitTest::Assert(
+			rotated.Equal(
+				Vector3D(1.998688f, 3.993851f, 6.004531f), 0.01f));
+
+	}
+
+
+
+	{
+		Vector3D v = Vector3D(1.0f, 2.0f, 3.0f);
+
+		Vector3D rotated =
+			v.RotateDeg(Vector3D(1, 2, 3));
+		UnitTest::Assert(
+			rotated.Equal(
+				Vector3D(0.9993439f, 1.996926f, 3.002266f), 0.001f));
+
+	}
+
+	{
+		Vector3D v = Vector3D(2.0f, 4.0f, 6.0f);
+
+		Vector3D rotated =
+			v.RotateDeg(Vector3D(1, 2, 3));
+		UnitTest::Assert(
+			rotated.Equal(
+				Vector3D(1.998688f, 3.993851f, 6.004531f), 0.01f));
+
+	}
+
 #pragma endregion
 	UnitTest::End();
 	//std::cout << "Hello World!\n";

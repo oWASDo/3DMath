@@ -1,7 +1,13 @@
+#ifndef Vect
+#define Vect
 #pragma once
-#include <math.h> 
-#include <vector>
+
+#include <math.h>
 #include "MathUtils.h"
+#include "Quaternion.h"
+
+class Quaternion;
+
 class Vector3D
 {
 public:
@@ -41,6 +47,7 @@ public:
 
 #pragma region Equal
 	bool operator==(Vector3D vector);
+	bool operator!=(Vector3D vector);
 	bool Equal(Vector3D other, float offset);
 	static bool Equal(Vector3D a, Vector3D b, float offset);
 
@@ -96,9 +103,12 @@ public:
 	void SetZ(float y);
 
 #pragma endregion
-	Vector3D Rotate(Vector3D vec);
-#pragma region Rotate
 
+#pragma region Rotate
+	Vector3D RotateRad(Vector3D vector);
+	Vector3D RotateRad(Quaternion quaternion);
+	Vector3D RotateDeg(Vector3D vector);
+	
 #pragma endregion
 
 
@@ -107,3 +117,4 @@ private:
 	float y;
 	float z;
 };
+#endif

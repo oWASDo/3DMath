@@ -11,7 +11,17 @@ Matrix4x4::Matrix4x4()
 
 Matrix4x4::Matrix4x4(std::vector<float> vector)
 {
-	elements = vector;
+	int i = 0;
+	for (float v : vector) {
+		if (i == 15)
+		{
+			break;
+		}
+		elements.emplace_back(v);
+		i++;
+	}
+
+	//elements = vector;
 }
 
 Matrix4x4::~Matrix4x4()
@@ -106,6 +116,23 @@ bool Matrix4x4::operator==(Matrix4x4 matrix)
 		}
 	}
 	return true;
+
+}
+bool Matrix4x4::operator!=(Matrix4x4 matrix)
+{
+	return !(*this == matrix);
+
+	//for (int i = 0; i < elements.size(); i++)
+	//{
+	//	if (elements[i] == matrix.elements[i]) {
+
+	//	}
+	//	else
+	//	{
+	//		return true;
+	//	}
+	//}
+	//return ;
 
 }
 Matrix4x4 Matrix4x4::Transpose() {

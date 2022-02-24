@@ -3,7 +3,7 @@
 #include <string>
 
 
-static class UnitTest
+class UnitTest
 {
 public:
 	UnitTest();

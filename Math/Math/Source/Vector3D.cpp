@@ -1,5 +1,8 @@
-#include "../Header/Vector3D.h"
 #include "../Header/Matrix4x4.h"
+//#include "../Header/Vector3DQuaternion.h"
+#include "../Header/Vector3D.h"
+
+
 
 #pragma region Init
 
@@ -131,6 +134,9 @@ Vector3D Vector3D::operator/(float other) {
 bool Vector3D::operator==(Vector3D other) {
 	return x == other.x && y == other.y && z == other.z;
 }
+bool Vector3D::operator!=(Vector3D other) {
+	return x == other.x || y == other.y || z == other.z;
+}
 bool Vector3D::Equal(Vector3D other, float offset)
 {
 	bool xEqualitX = ((x - other.x) < offset);
@@ -251,7 +257,11 @@ void Vector3D::SetZ(float z) {
 #pragma endregion
 
 #pragma endregion
-Vector3D Vector3D::Rotate(Vector3D rotate) {
+Vector3D Vector3D::RotateRad(Vector3D vector) {
+
+
+	/*
+
 	Vector3D result = *this;
 #pragma region First
 
@@ -263,11 +273,11 @@ Vector3D Vector3D::Rotate(Vector3D rotate) {
 
 	first.push_back(0);
 	first.push_back(cosf(rotate.GetX()));
-	first.push_back(sinf(rotate.GetX()));
+	first.push_back(-sinf(rotate.GetX()));
 	first.push_back(0);
 
 	first.push_back(0);
-	first.push_back(-sinf(rotate.GetX()));
+	first.push_back(sinf(rotate.GetX()));
 	first.push_back(cosf(rotate.GetX()));
 	first.push_back(0);
 
@@ -275,16 +285,14 @@ Vector3D Vector3D::Rotate(Vector3D rotate) {
 	first.push_back(0);
 	first.push_back(0);
 	first.push_back(1);
-	Matrix4x4 m1 = Matrix4x4(first);
 
-	result = m1 * result;
 #pragma endregion
 
 #pragma region Second
 	std::vector<float> second;
 	second.push_back(cosf(rotate.GetY()));
 	second.push_back(0);
-	second.push_back(-sinf(rotate.GetY()));
+	second.push_back(sinf(rotate.GetY()));
 	second.push_back(0);
 
 	second.push_back(0);
@@ -292,7 +300,7 @@ Vector3D Vector3D::Rotate(Vector3D rotate) {
 	second.push_back(0);
 	second.push_back(0);
 
-	second.push_back(sinf(rotate.GetY()));
+	second.push_back(-sinf(rotate.GetY()));
 	second.push_back(0);
 	second.push_back(cosf(rotate.GetY()));
 	second.push_back(0);
@@ -301,8 +309,6 @@ Vector3D Vector3D::Rotate(Vector3D rotate) {
 	second.push_back(0);
 	second.push_back(0);
 	second.push_back(1);
-	Matrix4x4 m2 = Matrix4x4(second);
-	result = m2 * result;
 
 #pragma endregion
 
@@ -328,13 +334,47 @@ Vector3D Vector3D::Rotate(Vector3D rotate) {
 	third.push_back(0);
 	third.push_back(0);
 	third.push_back(1);
+
+	Matrix4x4 m1 = Matrix4x4(first);
 	Matrix4x4 m3 = Matrix4x4(third);
+	Matrix4x4 m2 = Matrix4x4(second);
+	result = m1 * result;
+	result = m2 * result;
 	result = m3 * result;
 
 #pragma endregion
 
 
 	return result;
+	*/
+
+	Quaternion q = Quaternion(vector);
+
+	return RotateRad(q);
 }
+
+Vector3D Vector3D::RotateRad(Quaternion quaternion) {
+
+	Vector3D xyz = Vector3D(quaternion.GetX(), quaternion.GetY(), quaternion.GetZ());
+	Vector3D temp = Vector3D::Cross(xyz, *this);
+	Vector3D temp2 = *this * quaternion.GetW();
+	temp = temp + temp2;
+	temp2 = Vector3D::Cross(xyz, temp);
+	temp2 = temp2 * 2.0f;
+	return *this + temp2;
+}
+
+Vector3D Vector3D::RotateDeg(Vector3D vector)
+{
+	/*vector = Vector3D(
+		vector.GetX() * 0.0174532924f,
+		vector.GetY() * 0.0174532924f,
+		vector.GetZ() * 0.0174532924f);*/
+	vector = vector * 0.0174532924f;
+	return RotateRad(vector);
+}
+
+
+
 #pragma region Rotate
 

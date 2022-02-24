@@ -95,7 +95,8 @@ Vector2D Vector2D::operator/(Vector2D other) {
 	return div;
 
 }
-Vector2D Vector2D::operator/(float other) {
+Vector2D Vector2D::operator/(float other)
+{
 	Vector2D div;
 	div.x = x / other;
 	div.y = y / other;
@@ -104,24 +105,29 @@ Vector2D Vector2D::operator/(float other) {
 #pragma endregion
 
 #pragma region Equal
-bool Vector2D::operator==(Vector2D other) {
+bool Vector2D::operator==(Vector2D other) 
+{
 	return x == other.x && y == other.y;
 }
-bool Vector2D::Equal(Vector2D other, float offset)
+bool Vector2D::operator!=(Vector2D other) 
+{
+	return x == other.x || y == other.y;
+}
+bool Vector2D::Equal(Vector2D other, float tolerance)
 {
 	float calcX = (x - other.x);
 	calcX = fabsf(calcX);
-	bool xEqualitX = ((calcX) < offset);
+	bool xEqualitX = ((calcX) < tolerance);
 
 	float calcY = y - other.y;
 	calcY = fabsf(calcY);
-	bool yEqualitY = ((calcY) < offset);
+	bool yEqualitY = ((calcY) < tolerance);
 
 	return xEqualitX && yEqualitY;
 }
-bool Vector2D::Equal(Vector2D a, Vector2D b, float offset) {
+bool Vector2D::Equal(Vector2D a, Vector2D b, float tolerance) {
 
-	return a.Equal(b, offset);
+	return a.Equal(b, tolerance);
 }
 
 #pragma endregion
@@ -174,14 +180,6 @@ float Vector2D::AngleDeg(Vector2D a, Vector2D b) {
 #pragma region Lerp
 Vector2D Vector2D::Lerp(Vector2D other, float t)
 {
-	//if (t < 0.0f)
-	//{
-	//	t = 0.0f;
-	//}
-	//else if (t > 1.0f) {
-
-	//	t = 1.0f;
-	//}
 	t = MathUtils::Clamp(t, 0.0f, 1.0f);
 
 	Vector2D dir = other - *this;
@@ -216,16 +214,16 @@ Vector2D Vector2D::ReflectVector(Vector2D normalVector) {
 
 Vector2D Vector2D::ReflectVector(Vector2D a, Vector2D normalVector) {
 
-
 	return a.ReflectVector(normalVector);
 
 }
 Vector2D Vector2D::RotateDeg(const float angle)
 {
-	float rad = angle * 0.017453f;
 
-	float coss = cos(rad);
-	float sinn = sin(rad);
+	float rad = angle * MathUtils::Deg2Rad;
+
+	float coss = cosf(rad);
+	float sinn = sinf(rad);
 
 	float x1 = x * coss + y * sinn;
 	float y1 = (-(x * sinn)) + y * coss;
@@ -250,8 +248,8 @@ Vector2D Vector2D::RotateRad(float rad)
 {
 	//float deg = ((rad * 180.0f) / 3.14159265358979323846f);
 
-	float coss = cos(rad);
-	float sinn = sin(rad);
+	float coss = cosf(rad);
+	float sinn = sinf(rad);
 
 	float x1 = x * coss + y * sinn;
 	float y1 = (-(x * sinn)) + y * coss;

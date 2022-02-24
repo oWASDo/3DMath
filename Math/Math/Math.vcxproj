@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Quaternion.cpp" />
     <ClCompile Include="Source\Matrix4x4.cpp" />
     <ClCompile Include="Source\Vector3D.cpp" />
     <ClCompile Include="Source\MathUtils.cpp" />
@@ -149,8 +150,10 @@
   <ItemGroup>
     <ClInclude Include="Header\MathUtils.h" />
     <ClInclude Include="Header\Matrix4x4.h" />
+    <ClInclude Include="Header\Quaternion.h" />
     <ClInclude Include="Header\Vector2D.h" />
     <ClInclude Include="Header\Vector3D.h" />
+    <ClInclude Include="Header\Vector3DQuaternion.h" />
     <ClInclude Include="UnitTest\UnitTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
